@@ -6,4 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface SportService {
     Mono<Sport> createSport(String name);
+
+    Mono<Sport> getSportById(Integer id);
 }

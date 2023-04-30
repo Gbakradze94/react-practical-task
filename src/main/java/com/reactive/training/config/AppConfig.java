@@ -29,7 +29,8 @@ public class AppConfig {
     public RouterFunction<ServerResponse> setRoutes(SportController sportController) {
         log.info("INSIDE init()");
         return RouterFunctions
-                .route(RequestPredicates.GET("/api/v1/sport/initialize"), request -> sportController.init())
-                .andRoute(RequestPredicates.POST("/api/v1/sport/{sportName}"), sportController::createSport);
+                .route(RequestPredicates.GET("/sport/initialize"), request -> sportController.init())
+                .andRoute(RequestPredicates.POST("/sport/{sportName}"), sportController::createSport)
+                .andRoute(RequestPredicates.GET("/sport/{id}"), sportController::getSportById);
     }
 }

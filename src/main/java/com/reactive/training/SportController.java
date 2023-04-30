@@ -3,7 +3,6 @@ package com.reactive.training;
 import com.reactive.training.model.Sport;
 import com.reactive.training.service.SportDataService;
 import com.reactive.training.service.SportService;
-import com.reactive.training.service.SportServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -35,5 +34,13 @@ public class SportController {
                 .onErrorResume(error -> Mono.just(error.getMessage())
                         .flatMap(e -> ServerResponse.badRequest()
                                 .bodyValue(e)));
+    }
+
+    public Mono<ServerResponse> getSportById(ServerRequest request) {
+        return sportService.getSportById(Integer.valueOf(request.pathVariable("id")))
+                .flatMap(sport -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(sport))
+                .switchIfEmpty(ServerResponse.notFound().build());
     }
 }
