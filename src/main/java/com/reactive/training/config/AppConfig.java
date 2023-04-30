@@ -31,6 +31,8 @@ public class AppConfig {
         return RouterFunctions
                 .route(RequestPredicates.GET("/sport/initialize"), request -> sportController.init())
                 .andRoute(RequestPredicates.POST("/sport/{sportName}"), sportController::createSport)
-                .andRoute(RequestPredicates.GET("/sport/{id}"), sportController::getSportById);
+                .andRoute(RequestPredicates.GET("/sport/{id}"), sportController::getSportById)
+                .andRoute(RequestPredicates.GET("/backpressure/sport/initialize"),
+                        request -> sportController.backPressureInit());
     }
 }

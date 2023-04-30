@@ -2,6 +2,7 @@ package com.reactive.training;
 
 import com.reactive.training.model.Sport;
 import com.reactive.training.service.SportDataService;
+import com.reactive.training.service.SportDataServiceImpl;
 import com.reactive.training.service.SportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -42,5 +43,10 @@ public class SportController {
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(sport))
                 .switchIfEmpty(ServerResponse.notFound().build());
+    }
+
+    public Mono<ServerResponse> backPressureInit() {
+        return sportDataService.backPressureInit()
+                .then(ServerResponse.ok().bodyValue("Backpressure init with 20 elements at a time"));
     }
 }
